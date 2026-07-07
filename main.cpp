@@ -1,6 +1,10 @@
 #include <iostream>
 #include <raylib.h>
 #include <cmath>
+#include <vector>
+
+
+
 
 
 Color colours[] = {RED, GREEN, BLUE};
@@ -20,47 +24,38 @@ class TextBox{
         std::string title;
         float width;
         float height;
-
+        char inputtext[2] = {' ', ' '};
 
     public:
 
         TextBox(float x, float y, std::string title, float width, float height){
-
+            this->x = x;
+            this->y = y;
+            this->title = title;
+            this->width = width;
+            this->height = height;
         }
 
 
-        void TakeInputAndDisplay(std::string &inputtext, char title[], float x, float y, float width, float height){
+        void TakeInputAndDisplay(){
 
-        DrawRectangle(x, y, width, height, WHITE);
-        DrawText(title, x + 10, y + 10, 20, BLACK);
+            DrawRectangle(x, y, width, height, WHITE);
+            DrawText(title.c_str(), x + 10, y + 10, 20, BLACK);
 
-        auto key = GetCharPressed();
+            if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x, y, width, height})){
 
-        if (key!= 0){
-            std::cout << (char)key << "\n";
+                char key = GetCharPressed();
+
+                    std::cout << key << "\n";
+                
+
+            }
         }
 
-        }
+};
 
-
-
-
-}
-
-void TakeInputAndDisplay(std::string &inputtext, char title[], float x, float y, float width, float height){
-
-    DrawRectangle(x, y, width, height, WHITE);
-    DrawText(title, x + 10, y + 10, 20, BLACK);
-
-    auto key = GetCharPressed();
-
-    if (key!= 0){
-        std::cout << (char)key << "\n";
-    }
-
-
-
-}
+ 
+TextBox textbox1(100, 400, "RED: ", 150, 30);
 
 
 
@@ -111,13 +106,12 @@ int HexadecimalToDecimal(char hexa[], int arraysize){
 
 
 
-
 int main(){
 
     InitWindow(720, 720, "Match And Merge");
     SetTargetFPS(60);
 
-    std::cout << HexadecimalToDecimal("F0", 2);
+    std::cout << HexadecimalToDecimal("FF", 2);
 
 
     while(!WindowShouldClose()){
@@ -133,7 +127,7 @@ int main(){
 
         DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
 
-        TakeInputAndDisplay(usercolourred, "RED: ", 100, 500, 100, 30);
+        textbox1.TakeInputAndDisplay();
 
 
         EndDrawing();
