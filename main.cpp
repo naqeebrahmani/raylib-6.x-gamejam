@@ -24,11 +24,11 @@ void TakeInputAndDisplay(std::string &inputtext, char title[], float x, float y,
 
 
 
-int HexadecimalToDecimal(char hexa[]){
+int HexadecimalToDecimal(char hexa[], int arraysize){
 
     int num = 0;
     int temp_num;
-    int size = sizeof(*hexa)/sizeof(char);
+    int size = arraysize;
 
     for(int i = 0; i < size; i++){
         if(isdigit(hexa[i])==false){
@@ -53,12 +53,12 @@ int HexadecimalToDecimal(char hexa[]){
                     break;
             }
 
-            num += temp_num * pow(16, size-i);
+            num += temp_num * pow(16, size-i-1);
         
         }
         else{
 
-            num += hexa[i] * pow(16, size-i);
+            num += (hexa[i] - '0') * pow(16, size-i-1);
         }
 
     }
@@ -77,7 +77,7 @@ int main(){
     InitWindow(720, 720, "Match And Merge");
     SetTargetFPS(60);
 
-    std::cout << HexadecimalToDecimal("9");
+    std::cout << HexadecimalToDecimal("F0", 2);
 
 
     while(!WindowShouldClose()){
