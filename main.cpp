@@ -13,10 +13,50 @@ Color usercolour = {0,0,0,255};
 std::string usercolourred;
 
 
+class TextBox{
+    private:
+        float x;
+        float y;
+        std::string title;
+        float width;
+        float height;
+
+
+    public:
+
+        TextBox(float x, float y, std::string title, float width, float height){
+
+        }
+
+
+        void TakeInputAndDisplay(std::string &inputtext, char title[], float x, float y, float width, float height){
+
+        DrawRectangle(x, y, width, height, WHITE);
+        DrawText(title, x + 10, y + 10, 20, BLACK);
+
+        auto key = GetCharPressed();
+
+        if (key!= 0){
+            std::cout << (char)key << "\n";
+        }
+
+        }
+
+
+
+
+}
+
 void TakeInputAndDisplay(std::string &inputtext, char title[], float x, float y, float width, float height){
 
     DrawRectangle(x, y, width, height, WHITE);
     DrawText(title, x + 10, y + 10, 20, BLACK);
+
+    auto key = GetCharPressed();
+
+    if (key!= 0){
+        std::cout << (char)key << "\n";
+    }
 
 
 
@@ -53,13 +93,13 @@ int HexadecimalToDecimal(char hexa[], int arraysize){
                     break;
             }
 
-            num += temp_num * pow(16, size-i-1);
+            num += temp_num * pow(16, size-i-1); //subtracting 1 because i starts as 0
         
         }
         else{
 
-            num += (hexa[i] - '0') * pow(16, size-i-1);
-        }
+            num += (hexa[i] - '0') * pow(16, size-i-1); //subtracted the char 0 because of their ascii values 
+        }                                               //because 0 doesnt have the ascii value 0 but something like 48 i think
 
     }
 
