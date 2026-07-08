@@ -10,8 +10,9 @@ Color GREY = {200, 200, 200, 255};
 
 Color colours[] = {RED, GREEN, BLUE};
 
+int red; int green; int blue;
 
-
+bool invalidcolour;
 
 Color currentcolour = colours[0];
 
@@ -51,6 +52,14 @@ class TextBox{
 
         bool HexOrNot(){
             return hex;
+        }
+
+        std::string TextHex(){
+            return inputtexthex;
+        }
+
+        std::string TextDeci(){
+            return inputtextdeci;
         }
 
         void TakeInputAndDisplay(){
@@ -156,7 +165,7 @@ void selecttextbox(TextBox *tb1, TextBox *tb2, TextBox *tb3){
 }
 
 
-int HexadecimalToDecimal(char hexa[], int arraysize){
+int HexadecimalToDecimal(const char hexa[], int arraysize){
 
     int num = 0;
     int temp_num;
@@ -201,6 +210,62 @@ int HexadecimalToDecimal(char hexa[], int arraysize){
 
 
 
+bool IsDigitOrNot(const char array[], int size){
+
+    for(int i  = 0; i < size; i++){
+        if(!isdigit(array[i])){
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
+
+void AssignColours(){
+    int tempvar1;
+    int tempvar2;
+    int tempvar3;
+    if(textbox1.HexOrNot()){
+        std::string tempvarstr = textbox1.TextHex();
+        tempvar1 = HexadecimalToDecimal(tempvarstr.c_str(),tempvarstr.length());
+    }
+    else{
+        std::string tempvarstr = textbox1.TextDeci();
+
+        if(IsDigitOrNot(tempvarstr.c_str(), tempvarstr.length())){
+            tempvar1 = TextToInteger(tempvarstr.c_str());
+        }
+    }
+
+    if(textbox2.HexOrNot()){
+        std::string tempvarstr = textbox2.TextHex();
+        tempvar2 = HexadecimalToDecimal(tempvarstr.c_str(),tempvarstr.length());
+    }
+    else{
+        std::string tempvarstr = textbox2.TextDeci();
+
+        if(IsDigitOrNot(tempvarstr.c_str(), tempvarstr.length())){
+            tempvar2 = TextToInteger(tempvarstr.c_str());
+        }
+    }
+
+    if(textbox3.HexOrNot()){
+        std::string tempvarstr = textbox3.TextHex();
+        tempvar3 = HexadecimalToDecimal(tempvarstr.c_str(),tempvarstr.length());
+    }
+    else{
+        std::string tempvarstr = textbox3.TextDeci();
+
+        if(IsDigitOrNot(tempvarstr.c_str(), tempvarstr.length())){
+            tempvar3 = TextToInteger(tempvarstr.c_str());
+        }
+    }
+
+    //for testing//
+    std::cout << tempvar1 << ", " << tempvar2 << ", " << tempvar3 << "\n";
+}
 
 
 int main(){
@@ -214,6 +279,7 @@ int main(){
 
     while(!WindowShouldClose()){
 
+        AssignColours();
 
         selecttextbox(&textbox1, &textbox2, &textbox3);
         
@@ -222,7 +288,7 @@ int main(){
         
         ClearBackground(currentcolour);
 
-        DrawRectangle(260, 100, 200, 200, usercolour);
+        DrawRectangle(260, 100, 200, 200, {(unsigned char)red, (unsigned char)green, (unsigned char)blue, 255});
 
         DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
 
