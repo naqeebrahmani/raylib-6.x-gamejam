@@ -24,7 +24,12 @@ class TextBox{
         std::string title;
         float width;
         float height;
-        char inputtext[2] = {' ', ' '};
+        std::string inputtexthex = "";
+        std::string inputtextrgb = "";
+
+        bool hex = true;
+        
+
 
     public:
 
@@ -42,11 +47,30 @@ class TextBox{
             DrawRectangle(x, y, width, height, WHITE);
             DrawText(title.c_str(), x + 10, y + 10, 20, BLACK);
 
+            DrawRectangle(x +  width + 50, y, width/2, height, BLACK);
+            if(hex == true){
+                DrawText("hexa", x + width + 50 + 10, y + 5, 20, WHITE);
+            }
+            else{
+                DrawText("RGB", x + width + 50 + 10, y + 5, 20, WHITE);
+            }
+
+            if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x +  width + 50, y, width/2, height})){
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                    if(hex){
+                        hex = false;
+                    }
+                    else{
+                        hex = true;
+                    }
+                }
+            }
+
+
             if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x, y, width, height})){
 
                 char key = GetCharPressed();
 
-                    std::cout << key << "\n";
                 
 
             }
@@ -111,8 +135,9 @@ int main(){
     InitWindow(720, 720, "Match And Merge");
     SetTargetFPS(60);
 
+    //for testing
     std::cout << HexadecimalToDecimal("FF", 2);
-
+    ///////////////////////
 
     while(!WindowShouldClose()){
 
