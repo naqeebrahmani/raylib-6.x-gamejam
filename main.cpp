@@ -1,13 +1,16 @@
 #include <iostream>
 #include <raylib.h>
 #include <cmath>
-#include <vector>
+#include <string>
 
 
 
+Color GREY = {200, 200, 200, 255};
 
 
 Color colours[] = {RED, GREEN, BLUE};
+
+
 
 
 Color currentcolour = colours[0];
@@ -25,7 +28,7 @@ class TextBox{
         float width;
         float height;
         std::string inputtexthex = "";
-        std::string inputtextrgb = "";
+        std::string inputtextdeci = "";
 
         bool hex = true;
         
@@ -49,7 +52,7 @@ class TextBox{
         void TakeInputAndDisplay(){
 
             if(selected == true){
-            DrawRectangle(x, y, width, height, BLACK);
+            DrawRectangle(x, y, width, height, GREY);
             }
             else{
                 DrawRectangle(x, y, width, height, WHITE);
@@ -69,21 +72,49 @@ class TextBox{
                 if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                     if(hex){
                         hex = false;
+                        inputtexthex.clear();
                     }
                     else{
                         hex = true;
+                        inputtextdeci.clear();
                     }
                 }
             }
 
 
-            if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x, y, width, height})){
+            if(selected){
 
                 char key = GetCharPressed();
+                
+                if(key != 0){
+                    if(hex){
+                        if(inputtexthex.length() < 2){
+                            inputtexthex += std::toupper(key);
+                        }
+                    }
+                    else{
+                        if(inputtextdeci.length() < 3){
+                            inputtextdeci += std::toupper(key);
+                            }
+                        }
+                }
+                if(IsKeyPressed(KEY_BACKSPACE)){
+                    if(!inputtexthex.empty()){
+                    inputtexthex.pop_back(); 
+                    }
+                    if(!inputtextdeci.empty()){
+                        inputtextdeci.pop_back();
+                    }
+                }
 
                 
 
             }
+
+            DrawText(inputtexthex.c_str(), x + 90, y + 5, 25, BLACK);
+            DrawText(inputtextdeci.c_str(), x + 90, y + 5, 25, BLACK);
+
+
         }
 
 };
