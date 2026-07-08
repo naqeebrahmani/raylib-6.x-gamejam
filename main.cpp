@@ -7,8 +7,10 @@
 
 Color GREY = {200, 200, 200, 255};
 
+Color colRED = {255, 0, 0, 255};
+//Color colYELLOW = {}
 
-Color colours[] = {RED, GREEN, BLUE};
+Color colours[] = {colRED};
 
 int red; int green; int blue;
 
@@ -263,8 +265,18 @@ void AssignColours(){
         }
     }
 
-    //for testing//
-    std::cout << tempvar1 << ", " << tempvar2 << ", " << tempvar3 << "\n";
+    bool valid = false;
+
+    if(tempvar1 >= 0 && tempvar1 <= 255){
+        red = tempvar1;
+    }
+    if(tempvar2 >= 0 && tempvar2 <= 255){
+        green = tempvar2;
+    }
+    if(tempvar3 >= 0 && tempvar3 <= 255){
+        blue = tempvar3;
+    }
+
 }
 
 
