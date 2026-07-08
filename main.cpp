@@ -49,6 +49,10 @@ class TextBox{
         }
 
 
+        bool HexOrNot(){
+            return hex;
+        }
+
         void TakeInputAndDisplay(){
 
             if(selected == true){
