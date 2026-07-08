@@ -33,18 +33,28 @@ class TextBox{
 
     public:
 
+        bool selected = false;
+        Rectangle rect;
+
         TextBox(float x, float y, std::string title, float width, float height){
             this->x = x;
             this->y = y;
             this->title = title;
             this->width = width;
             this->height = height;
+            this->rect = Rectangle{x, y, width, height};
         }
 
 
         void TakeInputAndDisplay(){
 
-            DrawRectangle(x, y, width, height, WHITE);
+            if(selected == true){
+            DrawRectangle(x, y, width, height, BLACK);
+            }
+            else{
+                DrawRectangle(x, y, width, height, WHITE);
+            }
+            
             DrawText(title.c_str(), x + 10, y + 10, 20, BLACK);
 
             DrawRectangle(x +  width + 50, y, width/2, height, BLACK);
@@ -52,7 +62,7 @@ class TextBox{
                 DrawText("hexa", x + width + 50 + 10, y + 5, 20, WHITE);
             }
             else{
-                DrawText("RGB", x + width + 50 + 10, y + 5, 20, WHITE);
+                DrawText("deci", x + width + 50 + 10, y + 5, 20, WHITE);
             }
 
             if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x +  width + 50, y, width/2, height})){
@@ -79,8 +89,36 @@ class TextBox{
 };
 
  
-TextBox textbox1(100, 400, "RED: ", 150, 30);
+TextBox textbox1(100, 450, "RED: ", 150, 30);
+TextBox textbox2(100, 500, "GREEN: ", 150, 30);
+TextBox textbox3(100, 550, "BLUE: ", 150, 30);
 
+void selecttextbox(TextBox *tb1, TextBox *tb2, TextBox *tb3){
+
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+
+        if(CheckCollisionPointRec(GetMousePosition(), (*tb1).rect)){
+            (*tb1).selected = true;
+            (*tb2).selected = false;
+            (*tb3).selected = false;
+            
+        }
+        else if(CheckCollisionPointRec(GetMousePosition(), (*tb2).rect)){
+            (*tb2).selected = true;
+            (*tb1).selected = false;
+            (*tb3).selected = false;
+            
+        }
+        else if(CheckCollisionPointRec(GetMousePosition(), (*tb3).rect)){
+            (*tb3).selected = true;
+            (*tb1).selected = false;
+            (*tb2).selected = false;
+            
+        } 
+
+    }
+
+}
 
 
 int HexadecimalToDecimal(char hexa[], int arraysize){
@@ -142,6 +180,7 @@ int main(){
     while(!WindowShouldClose()){
 
 
+        selecttextbox(&textbox1, &textbox2, &textbox3);
         
 
         BeginDrawing();
@@ -153,6 +192,8 @@ int main(){
         DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
 
         textbox1.TakeInputAndDisplay();
+        textbox2.TakeInputAndDisplay();
+        textbox3.TakeInputAndDisplay();
 
 
         EndDrawing();
