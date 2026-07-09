@@ -4,19 +4,23 @@
 #include <string>
 
 
+int totalmerges = 0;
 
 Color GREY = {200, 200, 200, 255};
 
 Color colRED = {255, 0, 0, 255};
-//Color colYELLOW = {}
+Color colYELLOW = {255, 255, 0, 255};
 
-Color colours[] = {colRED};
+
+Color colours[] = {colRED, colYELLOW};
+
+
 
 int red; int green; int blue;
 
 bool invalidcolour;
 
-Color currentcolour = colours[0];
+int currentcolour = 0;
 
 Color usercolour = {0,0,0,255};
 
@@ -226,9 +230,9 @@ bool IsDigitOrNot(const char array[], int size){
 
 
 void AssignColours(){
-    int tempvar1;
-    int tempvar2;
-    int tempvar3;
+    int tempvar1 = -1;
+    int tempvar2 = -1;
+    int tempvar3 = -1;
     if(textbox1.HexOrNot()){
         std::string tempvarstr = textbox1.TextHex();
         tempvar1 = HexadecimalToDecimal(tempvarstr.c_str(),tempvarstr.length());
@@ -279,15 +283,27 @@ void AssignColours(){
 
 }
 
+void WinConditions(){
+
+    if(colours[currentcolour].r == (unsigned char)red && colours[currentcolour].g == (unsigned char)green && colours[currentcolour].b == (unsigned char)blue ){
+        DrawText("Merge Successfull!", 200, 100, 30, GREEN);
+        if(currentcolour < (sizeof(colours)/sizeof(Color))){
+            currentcolour++;
+        }
+    }
+
+    
+
+
+
+}
+
 
 int main(){
 
     InitWindow(720, 720, "Match And Merge");
     SetTargetFPS(60);
 
-    //for testing
-    std::cout << HexadecimalToDecimal("FF", 2);
-    ///////////////////////
 
     while(!WindowShouldClose()){
 
@@ -298,7 +314,7 @@ int main(){
 
         BeginDrawing();
         
-        ClearBackground(currentcolour);
+        ClearBackground(colours[currentcolour]);
 
         DrawRectangle(260, 100, 200, 200, {(unsigned char)red, (unsigned char)green, (unsigned char)blue, 255});
 
@@ -308,6 +324,7 @@ int main(){
         textbox2.TakeInputAndDisplay();
         textbox3.TakeInputAndDisplay();
 
+        WinConditions();
 
         EndDrawing();
     }
