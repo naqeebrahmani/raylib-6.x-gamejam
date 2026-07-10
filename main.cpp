@@ -138,11 +138,47 @@ class TextBox{
 
 };
 
- 
+class Button{
+    private:
+        float x;
+        float y;
+        float width;
+        float height;
+        std::string text;
+        bool visible;
+
+    public:
+        Button(float x, float y, float width, float height, std::string text, bool visible){
+            this->x = x;
+            this->y = y;
+            this->width = width;
+            this->height = height;
+            this->text = text;
+            this->visible = visible;
+        }
+
+        void display(){
+            if(visible){
+                DrawRectangle(x, y, width, height, GREY);
+                DrawText(text.c_str(), x + 10, y + 5, 20, BLACK);
+            }
+
+        }
+
+
+
+
+
+};
+
+//creating the buttons//
+Button buttonnext(500, 400, 100, 40, "NEXT->", true);
+
+//creating the textboxes//
 TextBox textbox1(100, 450, "RED: ", 150, 30);
 TextBox textbox2(100, 500, "GREEN: ", 150, 30);
 TextBox textbox3(100, 550, "BLUE: ", 150, 30);
-
+//============================================//
 void selecttextbox(TextBox *tb1, TextBox *tb2, TextBox *tb3){
 
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -309,6 +345,7 @@ int main(){
 
         AssignColours();
 
+
         selecttextbox(&textbox1, &textbox2, &textbox3);
         
 
@@ -320,9 +357,17 @@ int main(){
 
         DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
 
+        //drawing and taking input from the textboxes//
         textbox1.TakeInputAndDisplay();
         textbox2.TakeInputAndDisplay();
         textbox3.TakeInputAndDisplay();
+        //===========================================//
+
+        //drawing the buttons//
+
+        buttonnext.display();
+
+        //==========================//
 
         WinConditions();
 
