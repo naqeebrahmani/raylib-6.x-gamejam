@@ -4,8 +4,6 @@
 #include <string>
 
 
-int totalmerges = 0;
-
 Color GREY = {200, 200, 200, 255};
 
 Color colRED = {255, 0, 0, 255};
@@ -14,7 +12,8 @@ Color colYELLOW = {255, 255, 0, 255};
 
 Color colours[] = {colRED, colYELLOW};
 
-
+float score = 0;
+int totalscore = (sizeof(colours)/sizeof(Color))*100;
 
 int red; int green; int blue;
 
@@ -176,22 +175,34 @@ class Button{
                     else{
                     pressed = true;
                     }
-                    //test//
-                    std::cout << pressed;
                 }
 
             }
 
         }
 
+        void MakeVisible(){
+            visible = true;
+        }
+        void MakeInVisible(){
+            visible = false;
+        }
 
+        void UnPress(){
+            pressed = false;
+        }
+
+        bool Pressed(){
+            return pressed;
+        }
 
 
 
 };
 
+
 //creating the buttons//
-Button buttonnext(500, 450, 100, 40, "NEXT->", true);
+Button buttonnext(500, 450, 100, 40, "NEXT->", false);
 
 //creating the textboxes//
 TextBox textbox1(100, 450, "RED: ", 150, 30);
@@ -338,18 +349,62 @@ void AssignColours(){
 
 }
 
-void WinConditions(){
+void WinConditionsAndContinue(){
 
-    if(colours[currentcolour].r == (unsigned char)red && colours[currentcolour].g == (unsigned char)green && colours[currentcolour].b == (unsigned char)blue ){
-        DrawText("Merge Successfull!", 200, 100, 30, GREEN);
-        if(currentcolour < (sizeof(colours)/sizeof(Color))){
-            currentcolour++;
+    if(colours[currentcolour].r == (unsigned char)red && colours[currentcolour].g == (unsigned char)green && colours[currentcolour].b == (unsigned char)blue){
+        DrawText("PERFECT MERGE!", 200, 50, 30, GREEN);
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+            buttonnext.MakeVisible();
+        }
+    }
+    else if(((int)colours[currentcolour].r < (red + 10) &&  (int)colours[currentcolour].r > (red - 10))
+         && ((int)colours[currentcolour].g < (green + 10) &&  (int)colours[currentcolour].g > (green - 10))
+         && ((int)colours[currentcolour].b < (blue + 10) &&  (int)colours[currentcolour].b > (blue - 10)))
+    
+    {
+        
+        DrawText("Partial Merge", 250, 50, 30, GREEN);
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+            buttonnext.MakeVisible();
+        }
+    }
+    else if(((int)colours[currentcolour].r < (red + 20) &&  (int)colours[currentcolour].r > (red - 20))
+         && ((int)colours[currentcolour].g < (green + 20) &&  (int)colours[currentcolour].g > (green - 20))
+         && ((int)colours[currentcolour].b < (blue + 20) &&  (int)colours[currentcolour].b > (blue - 20)))
+    
+    {
+        
+        DrawText("Minimal Merge", 250, 50, 30, GREEN);
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+            buttonnext.MakeVisible();
         }
     }
 
+    else{
+        buttonnext.MakeInVisible();
+    }
+
+    if(buttonnext.Pressed()){
+        if(colours[currentcolour].r == (unsigned char)red && colours[currentcolour].g == (unsigned char)green && colours[currentcolour].b == (unsigned char)blue){
+        score += 10;
+        }
+        
+        else if(((int)colours[currentcolour].r < (red + 10) &&  (int)colours[currentcolour].r > (red - 10))
+         && ((int)colours[currentcolour].g < (green + 10) &&  (int)colours[currentcolour].g > (green - 10))
+         && ((int)colours[currentcolour].b < (blue + 10) &&  (int)colours[currentcolour].b > (blue - 10)))
+        {
+        score += 5;
+        }
+
+        else if(((int)colours[currentcolour].r < (red + 20) &&  (int)colours[currentcolour].r > (red - 20))
+         && ((int)colours[currentcolour].g < (green + 20) &&  (int)colours[currentcolour].g > (green - 20))
+         && ((int)colours[currentcolour].b < (blue + 20) &&  (int)colours[currentcolour].b > (blue - 20)))
     
+        {
+        score += 2.5;
+        }
 
-
+    }
 
 }
 
@@ -381,13 +436,11 @@ int main(){
         textbox3.TakeInputAndDisplay();
         //===========================================//
 
-        //drawing the buttons//
-
         buttonnext.displayAndPressCheck();
 
         //==========================//
 
-        WinConditions();
+        WinConditionsAndContinue();
 
         EndDrawing();
     }
