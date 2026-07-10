@@ -13,11 +13,11 @@ Color colYELLOW = {255, 255, 0, 255};
 Color colours[] = {colRED, colYELLOW};
 
 float score = 0;
-int totalscore = (sizeof(colours)/sizeof(Color))*100;
+int totalscore = (sizeof(colours)/sizeof(Color))*10;
 
 int red; int green; int blue;
 
-bool invalidcolour;
+bool finished = false;
 
 int currentcolour = 0;
 
@@ -335,7 +335,7 @@ void AssignColours(){
         }
     }
 
-    bool valid = false;
+    //bool valid = false;
 
     if(tempvar1 >= 0 && tempvar1 <= 255){
         red = tempvar1;
@@ -353,7 +353,7 @@ void WinConditionsAndContinue(){
 
     if(colours[currentcolour].r == (unsigned char)red && colours[currentcolour].g == (unsigned char)green && colours[currentcolour].b == (unsigned char)blue){
         DrawText("PERFECT MERGE!", 200, 50, 30, GREEN);
-        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
         }
     }
@@ -364,7 +364,7 @@ void WinConditionsAndContinue(){
     {
         
         DrawText("Partial Merge", 250, 50, 30, GREEN);
-        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
         }
     }
@@ -375,7 +375,7 @@ void WinConditionsAndContinue(){
     {
         
         DrawText("Minimal Merge", 250, 50, 30, GREEN);
-        if(currentcolour < ((sizeof(colours)/sizeof(Color)) - 1)){
+        if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
         }
     }
@@ -404,6 +404,14 @@ void WinConditionsAndContinue(){
         score += 2.5;
         }
 
+        buttonnext.UnPress();
+
+        if(currentcolour == (sizeof(colours)/sizeof(Color) - 1)){
+            finished = true;
+        }
+        else{
+        currentcolour ++;
+        }
     }
 
 }
@@ -417,32 +425,49 @@ int main(){
 
     while(!WindowShouldClose()){
 
-        AssignColours();
+        if(!finished){
 
+            AssignColours();
 
-        selecttextbox(&textbox1, &textbox2, &textbox3);
+            selecttextbox(&textbox1, &textbox2, &textbox3);
 
-        BeginDrawing();
+            BeginDrawing();
+            
+            ClearBackground(colours[currentcolour]);
+
+            DrawRectangle(260, 100, 200, 200, {(unsigned char)red, (unsigned char)green, (unsigned char)blue, 255});
+
+            DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
+
+            //drawing and taking input from the textboxes//
+            textbox1.TakeInputAndDisplay();
+            textbox2.TakeInputAndDisplay();
+            textbox3.TakeInputAndDisplay();
+            //===========================================//
+
+            buttonnext.displayAndPressCheck();
+
+            //==========================//
+
+            WinConditionsAndContinue();
+
+            EndDrawing();
         
-        ClearBackground(colours[currentcolour]);
+        }
 
-        DrawRectangle(260, 100, 200, 200, {(unsigned char)red, (unsigned char)green, (unsigned char)blue, 255});
+        else{
 
-        DrawRectangle(0, 400, 720, 320,  {0,0,0,155});
+            BeginDrawing();
 
-        //drawing and taking input from the textboxes//
-        textbox1.TakeInputAndDisplay();
-        textbox2.TakeInputAndDisplay();
-        textbox3.TakeInputAndDisplay();
-        //===========================================//
+            ClearBackground(WHITE);
 
-        buttonnext.displayAndPressCheck();
 
-        //==========================//
+            DrawText(TextFormat("Score: %0.2f/%0.2f", score, (float)totalscore), 100, 100, 30, BLACK);
 
-        WinConditionsAndContinue();
+            EndDrawing();
 
-        EndDrawing();
+        }
+
     }
 
 
