@@ -146,6 +146,7 @@ class Button{
         float height;
         std::string text;
         bool visible;
+        bool pressed = false;
 
     public:
         Button(float x, float y, float width, float height, std::string text, bool visible){
@@ -157,10 +158,28 @@ class Button{
             this->visible = visible;
         }
 
-        void display(){
+        void displayAndPressCheck(){
             if(visible){
+                if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x, y, width, height}) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+                    DrawRectangle(x, y, width - 5, height - 5, GREY);
+                    DrawText(text.c_str(), x + 5, y + 5, 20, BLACK);
+                }
+                else{
                 DrawRectangle(x, y, width, height, GREY);
-                DrawText(text.c_str(), x + 10, y + 5, 20, BLACK);
+                DrawText(text.c_str(), x + 10, y + 10, 20, BLACK);
+                }
+
+                if(CheckCollisionPointRec(GetMousePosition(), Rectangle{x, y, width, height}) && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
+                    if(pressed){
+                        pressed = false;
+                    }
+                    else{
+                    pressed = true;
+                    }
+                    //test//
+                    std::cout << pressed;
+                }
+
             }
 
         }
@@ -172,7 +191,7 @@ class Button{
 };
 
 //creating the buttons//
-Button buttonnext(500, 400, 100, 40, "NEXT->", true);
+Button buttonnext(500, 450, 100, 40, "NEXT->", true);
 
 //creating the textboxes//
 TextBox textbox1(100, 450, "RED: ", 150, 30);
@@ -347,7 +366,6 @@ int main(){
 
 
         selecttextbox(&textbox1, &textbox2, &textbox3);
-        
 
         BeginDrawing();
         
@@ -365,7 +383,7 @@ int main(){
 
         //drawing the buttons//
 
-        buttonnext.display();
+        buttonnext.displayAndPressCheck();
 
         //==========================//
 
