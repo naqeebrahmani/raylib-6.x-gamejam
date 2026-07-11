@@ -364,6 +364,7 @@ void WinConditionsAndContinue(){
         DrawText("PERFECT MERGE!", 200, 50, 30, GREEN);
         if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
+            buttonskip.MakeInVisible();
         }
     }
     else if(((int)colours[currentcolour].r <= (red + 10) &&  (int)colours[currentcolour].r >= (red - 10))
@@ -375,6 +376,7 @@ void WinConditionsAndContinue(){
         DrawText("Partial Merge", 250, 50, 30, GREEN);
         if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
+            buttonskip.MakeInVisible();
         }
     }
     else if(((int)colours[currentcolour].r <= (red + 20) &&  (int)colours[currentcolour].r >= (red - 20))
@@ -386,11 +388,13 @@ void WinConditionsAndContinue(){
         DrawText("Minimal Merge", 250, 50, 30, GREEN);
         if(currentcolour < ((sizeof(colours)/sizeof(Color)))){
             buttonnext.MakeVisible();
+            buttonskip.MakeInVisible();
         }
     }
 
     else{
         buttonnext.MakeInVisible();
+        buttonskip.MakeVisible();
     }
 
     if(buttonnext.Pressed()){
@@ -455,8 +459,15 @@ int main(){
             //===========================================//
 
             buttonnext.displayAndPressCheck();
-
+            buttonskip.displayAndPressCheck();
             //==========================//
+
+            //drawing progressbar//
+            DrawText("Progess:", 110, 630, 20, WHITE);
+            DrawRectangle(100, 650, (30*((float)sizeof(colours)/sizeof(Color)))*(currentcolour/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
+            DrawRectangleLinesEx(Rectangle{100, 650, 30*(sizeof(colours)/sizeof(Color)), 40}, 4, BLACK);
+            //===========================================================================================//
+
 
             WinConditionsAndContinue();
 
@@ -472,6 +483,11 @@ int main(){
 
 
             DrawText(TextFormat("Score: %0.2f/%0.2f", score, (float)totalscore), 100, 100, 30, BLACK);
+
+
+            DrawText("Progess:", 110, 630, 20, WHITE);
+            DrawRectangle(100, 650, (30*((float)sizeof(colours)/sizeof(Color)))*((currentcolour+1)/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
+            DrawRectangleLinesEx(Rectangle{100, 650, 30*(sizeof(colours)/sizeof(Color)), 40}, 4, BLACK);
 
             EndDrawing();
 
