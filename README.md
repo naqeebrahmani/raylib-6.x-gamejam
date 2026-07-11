@@ -9,7 +9,7 @@
 - Once you've gone through all the colours (1-10), you will be able to see your total score
 
 
-## How to Play?:
+## How to Play:
 You can play the game in one of two ways:
 - Windows: by downloading the executable from this repo
 - Browser: on itch.io (link - will add later)
