@@ -8,9 +8,13 @@ Color GREY = {200, 200, 200, 255};
 
 Color colRED = {255, 0, 0, 255};
 Color colYELLOW = {255, 255, 0, 255};
+Color colPURPLE = {255, 0, 255, 255};
+Color colGREY = {125, 125, 125, 255};
+Color colCYAN = {0, 255 ,255, 255};
 
 
-Color colours[] = {colRED, colYELLOW};
+
+Color colours[] = {colRED, colYELLOW, colPURPLE, colGREY, colCYAN};
 
 float score = 0;
 int totalscore = (sizeof(colours)/sizeof(Color))*10;
@@ -203,6 +207,7 @@ class Button{
 
 //creating the buttons//
 Button buttonnext(500, 450, 100, 40, "NEXT->", false);
+Button buttonskip(500, 550, 100, 40, "SKIP->", false);
 
 //creating the textboxes//
 TextBox textbox1(100, 450, "RED: ", 150, 30);
@@ -264,6 +269,10 @@ int HexadecimalToDecimal(const char hexa[], int arraysize){
                 case 'F':
                     temp_num = 15;
                     break;
+                default:
+                    temp_num = 0;
+                    return -1;
+                
             }
 
             num += temp_num * pow(16, size-i-1); //subtracting 1 because i starts as 0
@@ -357,9 +366,9 @@ void WinConditionsAndContinue(){
             buttonnext.MakeVisible();
         }
     }
-    else if(((int)colours[currentcolour].r < (red + 10) &&  (int)colours[currentcolour].r > (red - 10))
-         && ((int)colours[currentcolour].g < (green + 10) &&  (int)colours[currentcolour].g > (green - 10))
-         && ((int)colours[currentcolour].b < (blue + 10) &&  (int)colours[currentcolour].b > (blue - 10)))
+    else if(((int)colours[currentcolour].r <= (red + 10) &&  (int)colours[currentcolour].r >= (red - 10))
+         && ((int)colours[currentcolour].g <= (green + 10) &&  (int)colours[currentcolour].g >= (green - 10))
+         && ((int)colours[currentcolour].b <= (blue + 10) &&  (int)colours[currentcolour].b >= (blue - 10)))
     
     {
         
@@ -368,9 +377,9 @@ void WinConditionsAndContinue(){
             buttonnext.MakeVisible();
         }
     }
-    else if(((int)colours[currentcolour].r < (red + 20) &&  (int)colours[currentcolour].r > (red - 20))
-         && ((int)colours[currentcolour].g < (green + 20) &&  (int)colours[currentcolour].g > (green - 20))
-         && ((int)colours[currentcolour].b < (blue + 20) &&  (int)colours[currentcolour].b > (blue - 20)))
+    else if(((int)colours[currentcolour].r <= (red + 20) &&  (int)colours[currentcolour].r >= (red - 20))
+         && ((int)colours[currentcolour].g <= (green + 20) &&  (int)colours[currentcolour].g >= (green - 20))
+         && ((int)colours[currentcolour].b <= (blue + 20) &&  (int)colours[currentcolour].b >= (blue - 20)))
     
     {
         
@@ -389,16 +398,16 @@ void WinConditionsAndContinue(){
         score += 10;
         }
         
-        else if(((int)colours[currentcolour].r < (red + 10) &&  (int)colours[currentcolour].r > (red - 10))
-         && ((int)colours[currentcolour].g < (green + 10) &&  (int)colours[currentcolour].g > (green - 10))
-         && ((int)colours[currentcolour].b < (blue + 10) &&  (int)colours[currentcolour].b > (blue - 10)))
+        else if(((int)colours[currentcolour].r <= (red + 10) &&  (int)colours[currentcolour].r >= (red - 10))
+         && ((int)colours[currentcolour].g <= (green + 10) &&  (int)colours[currentcolour].g >= (green - 10))
+         && ((int)colours[currentcolour].b <= (blue + 10) &&  (int)colours[currentcolour].b >= (blue - 10)))
         {
         score += 5;
         }
 
-        else if(((int)colours[currentcolour].r < (red + 20) &&  (int)colours[currentcolour].r > (red - 20))
-         && ((int)colours[currentcolour].g < (green + 20) &&  (int)colours[currentcolour].g > (green - 20))
-         && ((int)colours[currentcolour].b < (blue + 20) &&  (int)colours[currentcolour].b > (blue - 20)))
+        else if(((int)colours[currentcolour].r <= (red + 20) &&  (int)colours[currentcolour].r >= (red - 20))
+         && ((int)colours[currentcolour].g <= (green + 20) &&  (int)colours[currentcolour].g >= (green - 20))
+         && ((int)colours[currentcolour].b <= (blue + 20) &&  (int)colours[currentcolour].b >= (blue - 20)))
     
         {
         score += 2.5;
