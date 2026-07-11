@@ -6,16 +6,20 @@
 
 Color GREY = {200, 200, 200, 255};
 
+Color colWHITE = {255, 255, 255, 255};
 Color colRED = {255, 0, 0, 255};
 Color colYELLOW = {255, 255, 0, 255};
 Color colORANGE = {255, 165, 0, 255};
-Color colPURPLE = {255, 0, 255, 255};
+Color colBROWN = {150, 75, 0, 255};
+Color colMAGENTA = {255, 0, 255, 255};
 Color colGREY = {125, 125, 125, 255};
 Color colCYAN = {0, 255 ,255, 255};
+Color colPINK = {255, 200, 200, 255};
+Color colBLACK = {0, 0, 0, 255};
 
 
 
-Color colours[] = {colRED, colYELLOW, colORANGE, colPURPLE, colGREY, colCYAN};
+Color colours[] = {colWHITE, colRED, colBROWN, colYELLOW, colORANGE, colGREY, colMAGENTA, colCYAN, colPINK, colBLACK};
 
 float score = 0;
 int totalscore = (sizeof(colours)/sizeof(Color))*10;
