@@ -21,3 +21,4 @@ You can play the game in one of two ways:
 - The next button (only available when you have some sort of merge) lets you continue to the next colour, by doing so you are awarded points based on the merge type
   
 
+#### Below is a picture of the windows executable running:
