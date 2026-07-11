@@ -6,7 +6,7 @@
 - Tests your colour knowledge with ten different colours
 - Allows you to input rgb values to merge (match) the square on the screen with the background (perfect, partial or minimal merge)
 - You get points (min 0, max 10) per colour depending on if you skip or merge (perfectly, partially or minimally)
-- And a final score in the end
+- Once you've gone through all the colours (10), you will be able to see your total score
 
 
 ## How to Play?:
