@@ -8,13 +8,14 @@ Color GREY = {200, 200, 200, 255};
 
 Color colRED = {255, 0, 0, 255};
 Color colYELLOW = {255, 255, 0, 255};
+Color colORANGE = {255, 165, 0, 255};
 Color colPURPLE = {255, 0, 255, 255};
 Color colGREY = {125, 125, 125, 255};
 Color colCYAN = {0, 255 ,255, 255};
 
 
 
-Color colours[] = {colRED, colYELLOW, colPURPLE, colGREY, colCYAN};
+Color colours[] = {colRED, colYELLOW, colORANGE, colPURPLE, colGREY, colCYAN};
 
 float score = 0;
 int totalscore = (sizeof(colours)/sizeof(Color))*10;
@@ -207,6 +208,9 @@ class Button{
 
 
 //creating the buttons//
+
+Button buttonstart(297.5, 300, 125, 40, "<<START>>", true);
+
 Button buttonnext(500, 450, 100, 40, "NEXT->", false);
 Button buttonskip(500, 550, 100, 40, "SKIP->", false);
 
@@ -452,10 +456,25 @@ int main(){
 
         if(!start){
 
+            if(buttonstart.Pressed()){
+                start = true;
+                buttonstart.UnPress();
+            }
+
 
             BeginDrawing();
 
+            ClearBackground(WHITE);
+            DrawRectangleGradientV(0, 0, 720, 720, GREEN, BLUE);
+            
+            DrawRectangleLinesEx(Rectangle{0, 0, 720, 720}, 5, BLACK);
+            
 
+            DrawText("Match", 280, 100, 50, RED);
+            DrawText("And", 325, 150, 30, GREEN);
+            DrawText("Merge", 280, 170, 50, BLUE);            
+
+            buttonstart.displayAndPressCheck();
 
             EndDrawing();
 
@@ -487,12 +506,16 @@ int main(){
 
             //drawing progressbar//
             DrawText("Progess:", 110, 630, 20, WHITE);
-            DrawRectangle(100, 650, (30*((float)sizeof(colours)/sizeof(Color)))*(currentcolour/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
-            DrawRectangleLinesEx(Rectangle{100, 650, 30*(sizeof(colours)/sizeof(Color)), 40}, 4, BLACK);
+            DrawRectangle(100, 650, 150*(currentcolour/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
+            DrawRectangleLinesEx(Rectangle{100, 650, 150, 40}, 4, BLACK);
             //===========================================================================================//
 
 
             WinConditionsAndContinue();
+
+
+            DrawRectangleLinesEx(Rectangle{0, 0, 720, 720}, 5, colours[currentcolour]);
+
 
             EndDrawing();
         
@@ -505,12 +528,33 @@ int main(){
             ClearBackground(WHITE);
 
 
-            DrawText(TextFormat("Score: %0.2f/%0.2f", score, (float)totalscore), 100, 100, 30, BLACK);
+            DrawText(TextFormat("Score: %0.2f/%0.2f", score, (float)totalscore), 220, 100, 30, BLACK);
 
 
-            DrawText("Progess:", 110, 630, 20, WHITE);
-            DrawRectangle(100, 650, (30*((float)sizeof(colours)/sizeof(Color)))*((currentcolour+1)/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
-            DrawRectangleLinesEx(Rectangle{100, 650, 30*(sizeof(colours)/sizeof(Color)), 40}, 4, BLACK);
+            if(score == totalscore){
+                DrawText("Perfect Score, huh?", 225, 200, 25, BLACK);
+                DrawText("Looks like someone knows their colours", 115, 250, 25, BLACK);
+            }
+            else if(((float)score/totalscore)>= 0.75){
+                DrawText("Not bad", 305, 200, 25, BLACK);
+            }
+            else if(((float)score/totalscore)>= 0.5){
+                DrawText("I mean, you got more than 50%", 180, 200, 25, BLACK);
+            }
+            else if(((float)score/totalscore)> 0){
+                DrawText("At least you know something", 190, 200, 25, BLACK);
+            }
+            else if((float)score == 0){
+                DrawText("How?", 320, 200, 25, BLACK);
+            }
+
+
+            DrawText("Progess:", 110, 630, 20, BLACK);
+            DrawRectangle(100, 650, 150*((currentcolour+1)/((float)sizeof(colours)/sizeof(Color))), 40, GREEN);
+            DrawRectangleLinesEx(Rectangle{100, 650, 150, 40}, 4, BLACK);
+
+
+            DrawRectangleLinesEx(Rectangle{0, 0, 720, 720}, 5, BLACK);
 
             EndDrawing();
 
