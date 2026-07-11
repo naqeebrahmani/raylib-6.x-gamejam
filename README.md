@@ -22,3 +22,5 @@ You can play the game in one of two ways:
   
 
 #### Below is a picture of the windows executable running:
+<img width="718" height="746" alt="Skärmbild 2026-07-11 210858" src="https://github.com/user-attachments/assets/74d88008-fd7a-4be9-8e4c-33eab6464a63" />
+
