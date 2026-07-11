@@ -21,6 +21,7 @@ int totalscore = (sizeof(colours)/sizeof(Color))*10;
 
 int red; int green; int blue;
 
+bool start = false;
 bool finished = false;
 
 int currentcolour = 0;
@@ -427,6 +428,17 @@ void WinConditionsAndContinue(){
         }
     }
 
+    if(buttonskip.Pressed()){
+        if(currentcolour == (sizeof(colours)/sizeof(Color) - 1)){
+            finished = true;
+        }
+        else{
+        currentcolour++;
+        }
+
+        buttonskip.UnPress();
+    }
+
 }
 
 
@@ -438,7 +450,18 @@ int main(){
 
     while(!WindowShouldClose()){
 
-        if(!finished){
+        if(!start){
+
+
+            BeginDrawing();
+
+
+
+            EndDrawing();
+
+        }
+
+        else if(!finished && start){
 
             AssignColours();
 
@@ -475,7 +498,7 @@ int main(){
         
         }
 
-        else{
+        else if(finished && start){
 
             BeginDrawing();
 
@@ -494,9 +517,6 @@ int main(){
         }
 
     }
-
-
-
 
 
 
